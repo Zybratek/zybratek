@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso de Verano Matemáticas 2026 · Zybratek</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --deep: #1a2d42;
+    --teal: #00b4a0;
+    --teal-light: #00d4bc;
+    --gold: #f5c842;
+    --coral: #ff6b5b;
+    --cream: #faf8f3;
+    --text: #1a1a2e;
+    --muted: #5a6a7a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    color: white;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(0,180,160,.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(245,200,66,.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* floating math symbols */
+  .hero::after {
+    content: '∑ π ∞ √ ² ÷ × ∫';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    font-family: 'Fraunces', serif;
+    font-size: 7rem;
+    color: rgba(255,255,255,.04);
+    word-spacing: 4rem;
+    letter-spacing: 2rem;
+    line-height: 1.4;
+    padding: 2rem;
+    overflow: hidden;
+    pointer-events: none;
+    animation: drift 30s linear infinite;
+  }
+
+  @keyframes drift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-60px); }
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--teal-light);
+    letter-spacing: .02em;
+  }
+
+  .badge-nav {
+    background: var(--teal);
+    color: white;
+    font-size: .75rem;
+    font-weight: 500;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .hero-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 3rem 2.5rem 5rem;
+    position: relative;
+    z-index: 10;
+    max-width: 780px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(0,180,160,.15);
+    border: 1px solid rgba(0,180,160,.4);
+    color: var(--teal-light);
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.8rem;
+    animation: fadeUp .6s ease both;
+  }
+
+  .tag::before { content: '★'; font-size: .65rem; }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .7s .1s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,.72);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp .7s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: .85rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: .85rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.3);
+    cursor: pointer;
+    transition: border-color .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.7); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 2.5rem; right: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    z-index: 10;
+    animation: fadeUp .7s .4s ease both;
+  }
+
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: .72rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .08em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DATE STRIP ── */
+  .date-strip {
+    background: var(--gold);
+    color: var(--navy);
+    text-align: center;
+    padding: 1rem 2rem;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: .02em;
+  }
+  .date-strip strong { font-weight: 700; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: .75rem;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--navy);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ── GRUPOS ── */
+  .grupos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .grupo-card {
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .grupo-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,.14); }
+
+  .grupo-header {
+    padding: 1.6rem 1.8rem 1.2rem;
+    color: white;
+  }
+
+  .grupo-card:nth-child(1) .grupo-header { background: linear-gradient(135deg, #0d6e8a, #00b4a0); }
+  .grupo-card:nth-child(2) .grupo-header { background: linear-gradient(135deg, #1a4d8f, #2d7dd2); }
+  .grupo-card:nth-child(3) .grupo-header { background: linear-gradient(135deg, #7b2d8b, #c45fc4); }
+
+  .grupo-year {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .75;
+    margin-bottom: .3rem;
+  }
+
+  .grupo-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: .6rem;
+  }
+
+  .grupo-time {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: rgba(255,255,255,.2);
+    font-size: .8rem;
+    padding: .3rem .75rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .grupo-body {
+    background: white;
+    padding: 1.4rem 1.8rem;
+  }
+
+  .grupo-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+  }
+
+  .grupo-body li {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    font-size: .92rem;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .grupo-body li::before {
+    content: '→';
+    color: var(--teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: .02em;
+  }
+
+  /* ── INCLUYE ── */
+  .incluye-section { background: var(--navy); }
+  .incluye-section h2, .incluye-section .section-label { color: white; }
+  .incluye-section .section-label { color: var(--teal-light); }
+  .incluye-section .section-intro { color: rgba(255,255,255,.6); }
+
+  .incluye-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .incluye-item {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 1rem;
+    padding: 1.6rem 1.4rem;
+    color: white;
+    transition: background .2s, transform .2s;
+  }
+  .incluye-item:hover { background: rgba(0,180,160,.12); transform: translateY(-4px); }
+
+  .incluye-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .incluye-item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: .4rem;
+  }
+
+  .incluye-item p {
+    font-size: .85rem;
+    color: rgba(255,255,255,.55);
+    line-height: 1.6;
+  }
+
+  /* ── PRECIO ── */
+  .precio-section { background: var(--cream); }
+
+  .precio-box {
+    max-width: 560px;
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 48px rgba(0,0,0,.1);
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .precio-top {
+    background: linear-gradient(135deg, var(--navy), var(--deep));
+    color: white;
+    padding: 2.5rem 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .precio-top .precio-label {
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: .5rem;
+  }
+
+  .precio-amount {
+    font-family: 'Fraunces', serif;
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .precio-amount sup {
+    font-size: 2rem;
+    vertical-align: super;
+  }
+
+  .precio-sub {
+    font-size: .85rem;
+    color: rgba(255,255,255,.55);
+    margin-top: .5rem;
+  }
+
+  .precio-features {
+    padding: 2rem 2.5rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+  }
+
+  .precio-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    font-size: .95rem;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .check {
+    width: 20px; height: 20px;
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: .1em;
+  }
+
+  .precio-cta {
+    padding: 0 2.5rem 2.5rem;
+  }
+
+  .precio-cta .btn-primary {
+    display: block;
+    text-align: center;
+    font-size: 1.05rem;
+    padding: 1rem;
+    border-radius: .75rem;
+  }
+
+  /* ── DIAGNOSTICO ── */
+  .diag-section { background: #f0f9f7; }
+
+  .diag-banner {
+    background: linear-gradient(135deg, var(--teal), #008a7a);
+    border-radius: 1.3rem;
+    padding: 2.5rem 2.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    box-shadow: 0 8px 32px rgba(0,180,160,.25);
+  }
+
+  .diag-icon { font-size: 3.5rem; flex-shrink: 0; }
+
+  .diag-text h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+
+  .diag-text p { font-size: .95rem; color: rgba(255,255,255,.8); line-height: 1.6; }
+
+  .diag-badge {
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.35);
+    padding: .4rem 1rem;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 500;
+    margin-top: .8rem;
+    display: inline-block;
+  }
+
+  /* ── PROMO MAYO ── */
+  .promo-strip {
+    background: linear-gradient(90deg, #b5451b, var(--coral), #e8873a);
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: .95rem;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+  }
+  .promo-strip::before {
+    content: '🔥';
+    margin-right: .5rem;
+  }
+  .promo-strip::after {
+    content: '🔥';
+    margin-left: .5rem;
+  }
+  .promo-strip strong { font-weight: 700; font-size: 1.05rem; }
+
+  /* precio dual cards */
+  .precio-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 840px;
+    margin: 0 auto 2rem;
+  }
+
+  @media (max-width: 680px) {
+    .precio-cards { grid-template-columns: 1fr; }
+  }
+
+  .precio-box {
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 48px rgba(0,0,0,.1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .precio-box.destacado {
+    box-shadow: 0 12px 56px rgba(245,200,66,.25), 0 4px 20px rgba(0,0,0,.12);
+    transform: scale(1.03);
+  }
+
+  .precio-ribbon {
+    position: absolute;
+    top: 14px; right: -28px;
+    background: var(--coral);
+    color: white;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: .3rem 2.8rem;
+    transform: rotate(35deg);
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+
+  /* ── APARTADO BANNER ── */
+  .apartado-banner {
+    max-width: 840px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--deep), #1e3a5f);
+    border-radius: 1rem;
+    padding: 1.4rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    color: white;
+    border: 1px solid rgba(0,180,160,.25);
+  }
+
+  .apartado-icon { font-size: 2rem; flex-shrink: 0; }
+
+  .apartado-text { font-size: .92rem; line-height: 1.6; color: rgba(255,255,255,.8); }
+  .apartado-text strong { color: var(--teal-light); font-size: 1rem; }
+
+  /* ── UBICACION ── */
+  .ubicacion-section { background: white; }
+
+  .ubicacion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .map-placeholder {
+    background: linear-gradient(135deg, #e8f4f8, #d0eae6);
+    border-radius: 1.2rem;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--teal);
+    font-size: 3rem;
+    border: 2px dashed rgba(0,180,160,.3);
+  }
+
+  .map-placeholder p {
+    font-size: .85rem;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .ubicacion-info h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .ubicacion-info address {
+    font-style: normal;
+    font-size: .95rem;
+    color: var(--muted);
+    line-height: 1.8;
+    background: var(--cream);
+    padding: 1.2rem 1.4rem;
+    border-radius: .75rem;
+    border-left: 3px solid var(--teal);
+    margin-bottom: 1.4rem;
+  }
+
+  .ubicacion-info address strong { color: var(--text); }
+
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--teal);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: .9rem;
+    transition: gap .2s;
+  }
+  .map-link:hover { gap: .8rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.45);
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    font-size: .82rem;
+  }
+
+  footer strong { color: var(--teal-light); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .hero-stats { display: none; }
+    .ubicacion-grid { grid-template-columns: 1fr; }
+    nav { padding: 1.2rem 1.5rem; }
+    .hero-body { padding: 2rem 1.5rem 4rem; }
+    section { padding: 3.5rem 1.2rem; }
+    .diag-banner { gap: 1.2rem; }
+    .precio-top { padding: 2rem 1.5rem 1.5rem; }
+    .precio-features, .precio-cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <nav>
+    <div class="logo">Zybratek</div>
+    <span class="badge-nav">Verano 2026</span>
+  </nav>
+
+  <div class="hero-body">
+    <div class="tag">Curso Intensivo · Presencial · Julio 2026</div>
+    <h1>Domina las<br><em>Matemáticas</em><br>este verano</h1>
+    <p class="hero-sub">
+      Una semana de clases enfocadas, grupos reducidos y metodología personalizada
+      para que entres al siguiente ciclo escolar con confianza y bases sólidas.
+    </p>
+    <div class="hero-ctas">
+      <a href="#precio" class="btn-primary">Ver costo e inscripción</a>
+      <a href="#grupos" class="btn-ghost">Ver temarios</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">alumnos máx.<br>por grupo</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2.5<span style="font-size:1rem">hrs</span></div>
+      <div class="stat-label">por sesión</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">días intensivos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FECHA STRIP ── -->
+<div class="date-strip">
+  📅 Clases del <strong>6 al 10 de Julio, 2026</strong> · Modalidad presencial en Mérida, Yuc.
+</div>
+
+<!-- ── GRUPOS ── -->
+<section id="grupos">
+  <div class="container">
+    <div class="section-label">Temario por grado</div>
+    <h2>Elige tu grupo</h2>
+    <p class="section-intro">
+      Cada grupo tiene su propio horario y contenido diseñado para cubrir exactamente
+      las bases que necesitarás en el siguiente año escolar.
+    </p>
+
+    <div class="grupos-grid">
+
+      <!-- 1° -->
+      <div class="grupo-card">
+        <div class="grupo-header">
+          <div class="grupo-year">Entrando a</div>
+          <div class="grupo-title">1° de Secundaria</div>
+          <span class="grupo-time">🕘 9:00 am – 11:30 am</span>
+        </div>
+        <div class="grupo-body">
+          <ul>
+            <li>Jerarquía de operaciones</li>
+            <li>Introducción al álgebra</li>
+            <li>Razones y proporciones</li>
+            <li>Fracciones</li>
+            <li>Áreas y perímetros</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2° -->
+      <div class="grupo-card">
+        <div class="grupo-header">
+          <div class="grupo-year">Entrando a</div>
+          <div class="grupo-title">2° de Secundaria</div>
+          <span class="grupo-time">🕦 11:30 am – 2:00 pm</span>
+        </div>
+        <div class="grupo-body">
+          <ul>
+            <li>Jerarquía de operaciones</li>
+            <li>Leyes de los exponentes</li>
+            <li>Ecuaciones de segundo grado</li>
+            <li>Sistemas de ecuaciones</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3° -->
+      <div class="grupo-card">
+        <div class="grupo-header">
+          <div class="grupo-year">Entrando a</div>
+          <div class="grupo-title">3° de Secundaria</div>
+          <span class="grupo-time">🕔 5:00 pm – 6:30 pm</span>
+        </div>
+        <div class="grupo-body">
+          <ul>
+            <li>Productos notables</li>
+            <li>Ecuaciones cuadráticas</li>
+            <li>Funciones</li>
+            <li>Teorema de Pitágoras</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── INCLUYE ── -->
+<section class="incluye-section">
+  <div class="container">
+    <div class="section-label">Todo incluido</div>
+    <h2>¿Qué obtienes?</h2>
+    <p class="section-intro">
+      Un solo pago cubre todo lo que necesitas para aprovechar al máximo el curso.
+    </p>
+
+    <div class="incluye-grid">
+      <div class="incluye-item">
+        <div class="incluye-icon">📚</div>
+        <h3>Material impreso</h3>
+        <p>Cuadernillo de trabajo y ejercicios físicos para cada alumno.</p>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-icon">👥</div>
+        <h3>Grupos reducidos</h3>
+        <p>Máximo 5 alumnos por grupo para una atención verdaderamente personalizada.</p>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-icon">💻</div>
+        <h3>Plataforma en línea</h3>
+        <p>Acceso a página web con ejercicios y repasos para continuar estudiando después del curso.</p>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-icon">🩺</div>
+        <h3>Examen diagnóstico</h3>
+        <p>Una semana antes del curso para identificar el punto de partida de cada alumno. Fecha y hora por confirmar.</p>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-icon">📝</div>
+        <h3>Carta de requerimientos</h3>
+        <p>Al finalizar el curso entregamos un informe personalizado al tutor con áreas de oportunidad y fortalezas detectadas.</p>
+      </div>
+      <div class="incluye-item">
+        <div class="incluye-icon">🎯</div>
+        <h3>Seguimiento real</h3>
+        <p>Orientación para canalizar correctamente a asesorías futuras según los resultados individuales.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROMO STRIP ── -->
+<div class="promo-strip">
+  ¡Inscríbete en <strong>Mayo</strong> y paga solo <strong>$1,500 MXN</strong> — ahorra $750!
+</div>
+
+<!-- ── PRECIO ── -->
+<section class="precio-section" id="precio">
+  <div class="container">
+    <div class="section-label" style="text-align:center">Inversión</div>
+    <h2 style="text-align:center">Elige tu opción</h2>
+    <p class="section-intro" style="text-align:center;margin:0 auto 2.5rem;">
+      Mismo curso completo, mismo contenido — el precio depende de cuándo te inscribas.
+    </p>
+
+    <div class="precio-cards">
+
+      <!-- PRECIO MAYO -->
+      <div class="precio-box destacado">
+        <div class="precio-ribbon">¡Mejor precio!</div>
+        <div class="precio-top" style="background: linear-gradient(135deg, #7b4a00, #c27c00);">
+          <div class="precio-label" style="color:var(--gold);">Inscripción en Mayo</div>
+          <div class="precio-amount"><sup>$</sup>1,500</div>
+          <div class="precio-sub">MXN · precio especial por tiempo limitado</div>
+          <div style="margin-top:.8rem; font-size:.8rem; color:rgba(255,255,255,.55); text-decoration:line-through;">Precio regular: $2,250</div>
+        </div>
+        <ul class="precio-features">
+          <li><span class="check" style="background:var(--gold);color:var(--navy);">✓</span> Ahorras <strong>$750 MXN</strong></li>
+          <li><span class="check" style="background:var(--gold);color:var(--navy);">✓</span> Todo el contenido incluido</li>
+          <li><span class="check" style="background:var(--gold);color:var(--navy);">✓</span> Material impreso</li>
+          <li><span class="check" style="background:var(--gold);color:var(--navy);">✓</span> Plataforma en línea</li>
+          <li><span class="check" style="background:var(--gold);color:var(--navy);">✓</span> Carta de requerimientos</li>
+        </ul>
+        <div class="precio-cta">
+          <a href="https://wa.me/528148235231?text=Hola,%20me%20interesa%20el%20curso%20de%20verano%20de%20matem%C3%A1ticas%20con%20el%20descuento%20de%20Mayo" class="btn-primary" target="_blank" style="background:var(--gold);color:var(--navy);font-weight:700;">
+            📲 Quiero precio Mayo
+          </a>
+        </div>
+      </div>
+
+      <!-- PRECIO REGULAR -->
+      <div class="precio-box">
+        <div class="precio-top">
+          <div class="precio-label">Precio regular</div>
+          <div class="precio-amount"><sup>$</sup>2,250</div>
+          <div class="precio-sub">MXN · pago único · todo el curso completo</div>
+        </div>
+        <ul class="precio-features">
+          <li><span class="check">✓</span> 5 días de clases (6–10 de Julio)</li>
+          <li><span class="check">✓</span> Material impreso incluido</li>
+          <li><span class="check">✓</span> Grupos de máximo 5 alumnos</li>
+          <li><span class="check">✓</span> Plataforma en línea con ejercicios</li>
+          <li><span class="check">✓</span> Examen diagnóstico previo</li>
+          <li><span class="check">✓</span> Carta de requerimientos</li>
+        </ul>
+        <div class="precio-cta">
+          <a href="https://wa.me/528148235231?text=Hola,%20me%20interesa%20el%20curso%20de%20verano%20de%20matem%C3%A1ticas" class="btn-primary" target="_blank">
+            📲 Apartar mi lugar
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- APARTADO -->
+    <div class="apartado-banner">
+      <div class="apartado-icon">💳</div>
+      <div class="apartado-text">
+        <strong>¿No tienes el total aún?</strong> Puedes apartar tu lugar con solo <strong>$500 MXN</strong> y liquidar el resto antes de iniciar el curso.
+        Escríbenos por WhatsApp y te explicamos cómo.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── DIAGNOSTICO ── -->
+<section class="diag-section">
+  <div class="container">
+    <div class="diag-banner">
+      <div class="diag-icon">🔬</div>
+      <div class="diag-text">
+        <h3>Examen Diagnóstico</h3>
+        <p>
+          Una semana antes de iniciar el curso realizamos una evaluación breve y sin presión
+          para conocer el nivel y las necesidades específicas de cada alumno.
+          Esto nos permite adaptar la enseñanza desde el primer día.
+        </p>
+        <span class="diag-badge">📅 Fecha y hora por confirmar · Contáctanos para más info</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UBICACIÓN ── -->
+<section class="ubicacion-section">
+  <div class="container">
+    <div class="ubicacion-grid">
+      <div class="map-placeholder">
+        📍
+        <p>Ecetronics Mid<br>Calle 19A #20 x 60 y 12, Local 4<br>Felipe Carrillo Puerto, Mérida</p>
+      </div>
+      <div class="ubicacion-info">
+        <div class="section-label">Dónde encontrarnos</div>
+        <h3>Clases 100% presenciales</h3>
+        <address>
+          <strong>Ecetronics Mid</strong><br>
+          Calle 19A #20 x 60 y 12, Local 4<br>
+          Col. Felipe Carrillo Puerto<br>
+          C.P. 97208, Mérida, Yucatán
+        </address>
+        <a href="https://maps.google.com/?q=Calle+19A+%2320+x+60+y+12+Local+4+Felipe+Carrillo+Puerto+Mérida+Yucatán" target="_blank" class="map-link">
+          🗺️ Ver en Google Maps →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2026 <strong>Zybratek</strong> · Mérida, Yucatán · Curso de Verano de Matemáticas</p>
+  <p style="margin-top:.5rem">Cupo limitado a 5 alumnos por grupo · ¡Aparta tu lugar hoy!</p>
+</footer>
+
+</body>
+</html>
